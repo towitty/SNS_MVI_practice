@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -39,6 +41,9 @@ android {
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12"
+    }
 }
 
 dependencies {
@@ -61,4 +66,30 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(libs.orbit.core)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.compose)
+    testImplementation(libs.orbit.test)
+
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlinx.serialization.converter)
+    implementation(libs.okhttp)
+    implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil3.coil.network.okhttp)
+
+    implementation(libs.androidx.paging.runtime)
+    testImplementation(libs.paging.common)
+    implementation(libs.androidx.paging.compose)
+
+    implementation(libs.kotlinx.coroutines.android)
+
 }
