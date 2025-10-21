@@ -14,16 +14,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.towitty.presentation.component.SNSButton
 import com.towitty.presentation.component.SNSTextField
 import com.towitty.presentation.theme.SNSTheme
 
 @Composable
 fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+    LoginScreen(
+        id = "",
+        password = "",
+        onIdChange = {},
+        onPasswordChange = {},
+        onNavigateToSignUpScreen = viewModel::onLoginClick
+    )
+}
+
+@Composable
+private fun LoginScreen(
     id: String,
     password: String,
     onIdChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onNavigateToSignUpScreen: () -> Unit,
 ) {
     Surface {
         Column(
@@ -109,6 +124,7 @@ private fun LoginScreenPreview() {
             password = "mi",
             onIdChange = {},
             onPasswordChange = {},
+            onNavigateToSignUpScreen = {}
         )
     }
 }
