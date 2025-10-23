@@ -18,7 +18,7 @@ import com.towitty.presentation.theme.SNSTheme
 
 @Composable
 fun WelcomeScreen(
-    onNavigateToLoginScreen: () -> Unit = {}
+    onNavigateToLoginScreen: () -> Unit
 ) {
     Surface {
         Box(

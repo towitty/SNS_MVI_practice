@@ -10,7 +10,7 @@ fun LoginNavHost() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = LoginRoute.WelcomeScreen
+        startDestination = LoginRoute.WelcomeScreen.name
     ) {
         composable(route = LoginRoute.WelcomeScreen.name) {
             WelcomeScreen(
