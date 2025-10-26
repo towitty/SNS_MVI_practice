@@ -43,7 +43,7 @@ class SignUpViewModel @Inject constructor(
 
     fun onSignUpClick() = intent {
         if (state.password != state.repeatPassword) {
-            postSideEffect(SignUpSideEffect.Toast(message = "패스워드를 확인해주세요."))
+            postSideEffect(SignUpSideEffect.Toast(message = "패스워드를 다시 확인해주세요."))
             return@intent
         }
         val isSuccessful = signUpUseCase(
@@ -54,6 +54,7 @@ class SignUpViewModel @Inject constructor(
 
         if (isSuccessful) {
             postSideEffect(SignUpSideEffect.NavigateToLoginScreen)
+            postSideEffect(SignUpSideEffect.Toast("회원가입에 성공했습니다"))
         }
     }
 }

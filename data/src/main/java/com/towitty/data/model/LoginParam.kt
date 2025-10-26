@@ -6,7 +6,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 @Serializable
-data class UserParam(
+data class LoginParam(
     val loginId: String,
     val password: String
 ) {

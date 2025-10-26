@@ -3,6 +3,7 @@ package com.towitty.presentation.login
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import com.towitty.domain.usecase.login.LoginUseCase
+import com.towitty.domain.usecase.login.SetTokenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val setTokenUseCase: SetTokenUseCase
 ) : ViewModel(), ContainerHost<LoginState, LoginSideEffect> {
 
     override val container: Container<LoginState, LoginSideEffect> =
@@ -41,7 +43,8 @@ class LoginViewModel @Inject constructor(
     fun onLoginClick() = intent {
         val id = state.id
         val password = state.password
-        val token = loginUseCase(id, password)
+        val token = loginUseCase(id, password).getOrThrow()
+        setTokenUseCase(token)
         postSideEffect(LoginSideEffect.NavigateToMainActivity)
 //        postSideEffect(LoginSideEffect.Toast("$token"))
 
