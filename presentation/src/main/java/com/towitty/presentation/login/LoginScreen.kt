@@ -1,7 +1,9 @@
 package com.towitty.presentation.login
 
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.towitty.presentation.MainActivity
 import com.towitty.presentation.component.SNSButton
 import com.towitty.presentation.component.SNSTextField
 import com.towitty.presentation.theme.SNSTheme
@@ -26,7 +29,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    onNavigateToSignUpScreen: () -> Unit
 ) {
     val state = viewModel.collectAsState().value
     val context = LocalContext.current
@@ -38,6 +42,14 @@ fun LoginScreen(
                 sideEffect.message,
                 Toast.LENGTH_SHORT
             ).show()
+
+            is LoginSideEffect.NavigateToMainActivity -> context.startActivity(
+                Intent(
+                    context, MainActivity::class.java
+                ).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+            )
         }
     }
 
@@ -46,7 +58,7 @@ fun LoginScreen(
         password = state.password,
         onIdChange = viewModel::onIdChange,
         onPasswordChange = viewModel::onPasswordChange,
-        onNavigateToSignUpScreen = {},
+        onNavigateToSignUpScreen = onNavigateToSignUpScreen,
         onLoginClick = viewModel::onLoginClick
     )
 }
@@ -120,13 +132,14 @@ private fun LoginScreen(
                         .padding(top = 24.dp)
                         .fillMaxWidth(),
                     text = "로그인",
-                    onClick = {}
+                    onClick = onLoginClick
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Row(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 24.dp)
+                        .clickable(onClick = onNavigateToSignUpScreen)
                 ) {
                     Text(text = "Don't have an account?")
                     Text(text = "Sign up", color = MaterialTheme.colorScheme.primary)

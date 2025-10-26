@@ -2,13 +2,12 @@ package com.towitty.presentation.login
 
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.towitty.domain.usecase.login.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.blockingIntent
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -31,11 +30,11 @@ class LoginViewModel @Inject constructor(
             }
         )
 
-    fun onIdChange(id: String) = intent {
+    fun onIdChange(id: String) = blockingIntent {
         reduce { state.copy(id = id) }
     }
 
-    fun onPasswordChange(password: String) = intent {
+    fun onPasswordChange(password: String) = blockingIntent {
         reduce { state.copy(password = password) }
     }
 
@@ -43,7 +42,8 @@ class LoginViewModel @Inject constructor(
         val id = state.id
         val password = state.password
         val token = loginUseCase(id, password)
-        postSideEffect(LoginSideEffect.Toast("$token"))
+        postSideEffect(LoginSideEffect.NavigateToMainActivity)
+//        postSideEffect(LoginSideEffect.Toast("$token"))
 
     }
 }
@@ -56,4 +56,6 @@ data class LoginState(
 
 sealed interface LoginSideEffect {
     class Toast(val message: String) : LoginSideEffect
+
+    object NavigateToMainActivity : LoginSideEffect
 }

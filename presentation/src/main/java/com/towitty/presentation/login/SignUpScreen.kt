@@ -1,5 +1,6 @@
 package com.towitty.presentation.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -13,14 +14,52 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.towitty.presentation.component.SNSButton
 import com.towitty.presentation.component.SNSTextField
 import com.towitty.presentation.theme.SNSTheme
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
+
 
 @Composable
 fun SignUpScreen(
+    viewModel: SignUpViewModel = hiltViewModel(),
+    onNavigateToLoginScreen: () -> Unit
+) {
+    val state = viewModel.collectAsState().value
+    val context = LocalContext.current
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is SignUpSideEffect.Toast -> Toast.makeText(
+                context,
+                sideEffect.message,
+                Toast.LENGTH_SHORT
+            ).show()
+
+            is SignUpSideEffect.NavigateToLoginScreen -> onNavigateToLoginScreen()
+        }
+    }
+
+    SignUpScreen(
+        id = state.id,
+        username = state.username,
+        password1 = state.password,
+        password2 = state.repeatPassword,
+        onIdChange = viewModel::onIdChange,
+        onUsernameChange = viewModel::onUsernameChange,
+        onPassword1Change = viewModel::onPasswordChange,
+        onPassword2Change = viewModel::onRepeatPasswordChange,
+        onSignUpClick = viewModel::onSignUpClick
+    )
+}
+
+@Composable
+private fun SignUpScreen(
     id: String,
     username: String,
     password1: String,
@@ -29,7 +68,7 @@ fun SignUpScreen(
     onUsernameChange: (String) -> Unit,
     onPassword1Change: (String) -> Unit,
     onPassword2Change: (String) -> Unit,
-    onSignUpClick: () -> Unit = {}
+    onSignUpClick: () -> Unit
 ) {
     Surface {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -95,6 +134,7 @@ fun SignUpScreen(
                         .padding(top = 8.dp)
                         .fillMaxWidth(),
                     value = password1,
+                    visualTransformation = PasswordVisualTransformation(),
                     onValueChange = onPassword1Change
                 )
 
@@ -108,6 +148,7 @@ fun SignUpScreen(
                         .padding(top = 8.dp)
                         .fillMaxWidth(),
                     value = password2,
+                    visualTransformation = PasswordVisualTransformation(),
                     onValueChange = onPassword2Change
                 )
 

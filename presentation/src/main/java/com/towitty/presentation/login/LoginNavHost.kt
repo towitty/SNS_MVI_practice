@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 
 @Composable
 fun LoginNavHost() {
@@ -20,18 +21,22 @@ fun LoginNavHost() {
             )
         }
         composable(route = LoginRoute.LoginScreen.name) {
-            LoginScreen()
+            LoginScreen(
+                onNavigateToSignUpScreen = {
+                    navController.navigate(LoginRoute.SignUpScreen.name)
+                }
+            )
         }
         composable(route = LoginRoute.SignUpScreen.name) {
             SignUpScreen(
-                id = "persequeris",
-                username = "Bernadette Clements",
-                password1 = "congue",
-                password2 = "sociosqu",
-                onIdChange = {},
-                onUsernameChange = {},
-                onPassword1Change = {},
-                onPassword2Change = {}
+                onNavigateToLoginScreen = {
+                    navController.navigate(
+                        route = LoginRoute.LoginScreen.name,
+                        navOptions = navOptions {
+                            popUpTo(LoginRoute.WelcomeScreen.name)
+                        }
+                    )
+                }
             )
         }
     }
