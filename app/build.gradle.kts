@@ -83,8 +83,9 @@ dependencies {
 
     implementation(libs.androidx.datastore.preferences)
 
+    implementation(libs.coil)
     implementation(libs.coil.compose)
-    implementation(libs.coil3.coil.network.okhttp)
+    implementation(libs.coil.network.okhttp)
 
     implementation(libs.androidx.paging.runtime)
     testImplementation(libs.paging.common)

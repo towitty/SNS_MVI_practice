@@ -1,8 +1,10 @@
-package com.towitty.presentation
+package com.towitty.presentation.main.writing
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class WritingActivity : AppCompatActivity() {
+
+
 }

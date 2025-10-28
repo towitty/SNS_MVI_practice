@@ -1,8 +1,10 @@
 package com.towitty.data.retrofit
 
 import com.towitty.data.model.CommonResponse
+import com.towitty.data.model.UserDTO
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
@@ -19,4 +21,8 @@ interface UserService {
     suspend fun signUp(
         @Body requestBody: RequestBody
     ): CommonResponse<Long>
+
+    @GET("users/my-page")
+    suspend fun myPage(): CommonResponse<UserDTO>
+
 }

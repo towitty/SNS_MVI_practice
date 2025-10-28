@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.towitty.presentation.MainActivity
+import com.towitty.presentation.main.MainActivity
 import com.towitty.presentation.component.SNSButton
 import com.towitty.presentation.component.SNSTextField
 import com.towitty.presentation.theme.SNSTheme

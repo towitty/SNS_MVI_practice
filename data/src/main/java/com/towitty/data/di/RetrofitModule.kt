@@ -11,7 +11,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-val SNS_HOST = "http://localhost:8080"
+val SNS_HOST = "http://192.168.219.101:8080"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -31,7 +31,7 @@ class RetrofitModule {
         }.asConverterFactory("application/json; charset=UTF8".toMediaType())
 
         return Retrofit.Builder()
-            .baseUrl(SNS_HOST)
+            .baseUrl("$SNS_HOST/api/")
             .addConverterFactory(converterFactory)
             .client(client)
             .build()
