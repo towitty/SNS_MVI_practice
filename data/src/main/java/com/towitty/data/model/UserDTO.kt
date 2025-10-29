@@ -1,7 +1,9 @@
 package com.towitty.data.model
 
 import com.towitty.domain.model.User
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserDTO(
     val id: Long,
     val loginId: String,
