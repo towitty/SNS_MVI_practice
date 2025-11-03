@@ -6,12 +6,16 @@ import com.towitty.data.usecase.LoginUseCaseImpl
 import com.towitty.data.usecase.SetTokenUseCaseImpl
 import com.towitty.data.usecase.SignUpUseCaseImpl
 import com.towitty.data.usecase.main.setting.GetMyUseCaseImpl
+import com.towitty.data.usecase.main.setting.SetMyUserUseCaseImpl
+import com.towitty.data.usecase.main.setting.SetProfileImageUseCaseImpl
 import com.towitty.domain.usecase.login.ClearTokenUseCase
 import com.towitty.domain.usecase.login.GetTokenUseCase
 import com.towitty.domain.usecase.login.LoginUseCase
 import com.towitty.domain.usecase.login.SetTokenUseCase
 import com.towitty.domain.usecase.login.SignUpUseCase
 import com.towitty.domain.usecase.main.setting.GetMyUserUseCase
+import com.towitty.domain.usecase.main.setting.SetMyUserUseCase
+import com.towitty.domain.usecase.main.setting.SetProfileImageUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -38,4 +42,10 @@ abstract class UserModule {
 
     @Binds
     abstract fun bindGetMyUserUseCase(getMyUserUseCaseImpl: GetMyUseCaseImpl): GetMyUserUseCase
+
+    @Binds
+    abstract fun bindSetMyUserUseCase(setMyUserUseCaseImpl: SetMyUserUseCaseImpl): SetMyUserUseCase
+
+    @Binds
+    abstract fun bindSetProfileImageUseCase(setProfileImageUseCaseImpl: SetProfileImageUseCaseImpl): SetProfileImageUseCase
 }

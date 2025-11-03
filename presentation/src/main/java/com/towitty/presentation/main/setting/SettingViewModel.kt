@@ -1,10 +1,13 @@
 package com.towitty.presentation.main.setting
 
+import android.net.Uri
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import com.towitty.domain.model.User
 import com.towitty.domain.usecase.login.ClearTokenUseCase
 import com.towitty.domain.usecase.main.setting.GetMyUserUseCase
+import com.towitty.domain.usecase.main.setting.SetMyUserUseCase
+import com.towitty.domain.usecase.main.setting.SetProfileImageUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.orbitmvi.orbit.Container
@@ -15,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingViewModel @Inject constructor(
     private val clearTokenUseCase: ClearTokenUseCase,
-    private val getMyUserUseCase: GetMyUserUseCase
+    private val getMyUserUseCase: GetMyUserUseCase,
+    private val setMyUserUseCase: SetMyUserUseCase,
+    private val setProfileImageUseCase: SetProfileImageUseCase
 ) : ViewModel(), ContainerHost<SettingState, SettingSideEffect> {
 
     override val container: Container<SettingState, SettingSideEffect> =
@@ -45,6 +50,20 @@ class SettingViewModel @Inject constructor(
     fun onLogoutClick() = intent {
         clearTokenUseCase().getOrThrow()
         postSideEffect(SettingSideEffect.NavigateToLoginActivity)
+    }
+
+    fun onUsernameChange(username: String) = intent {
+        setMyUserUseCase(
+            username = username,
+        ).getOrThrow()
+        load()
+    }
+
+    fun onImageChange(contentUri: Uri?) = intent {
+        setProfileImageUseCase(
+            contentUri = contentUri.toString()
+        ).getOrThrow()
+        load()
     }
 
 }
