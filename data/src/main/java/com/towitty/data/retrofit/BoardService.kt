@@ -1,0 +1,14 @@
+package com.towitty.data.retrofit
+
+import com.towitty.data.model.CommonResponse
+import okhttp3.RequestBody
+import retrofit2.http.Body
+import retrofit2.http.POST
+
+interface BoardService {
+
+    @POST("boards")
+    suspend fun postBoard(
+        @Body requestBody: RequestBody
+    ): CommonResponse<Long>
+}

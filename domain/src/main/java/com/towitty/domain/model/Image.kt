@@ -1,11 +1,11 @@
 package com.towitty.domain.model
 
-import kotlinx.serialization.Serializable
+import java.io.Serializable
 
-@Serializable
+@kotlinx.serialization.Serializable
 data class Image(
     val uri: String,
     val name: String,
     val size: Long,
     val mimeType: String,
-)
+) : Serializable

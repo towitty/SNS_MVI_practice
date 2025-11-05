@@ -1,6 +1,7 @@
 package com.towitty.data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.towitty.data.retrofit.BoardService
 import com.towitty.data.retrofit.FileService
 import com.towitty.data.retrofit.SNSInterceptor
 import com.towitty.data.retrofit.UserService
@@ -48,5 +49,10 @@ class RetrofitModule {
     @Provides
     fun provideFileService(retrofit: Retrofit): FileService {
         return retrofit.create(FileService::class.java)
+    }
+
+    @Provides
+    fun provideBoardService(retrofit: Retrofit): BoardService {
+        return retrofit.create(BoardService::class.java)
     }
 }
