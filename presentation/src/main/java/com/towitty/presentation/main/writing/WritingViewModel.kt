@@ -50,10 +50,21 @@ class WritingViewModel @Inject constructor(
             }
         }
     }
+
+    fun onTextChange(text: String) = intent {
+        reduce {
+            state.copy(text = text)
+        }
+    }
+
+    fun onPostClick() = intent {
+        // TODO
+    }
 }
 
 @Immutable
 data class WritingState(
+    val text: String = "",
     val selectedImages: List<Image> = emptyList(),
     val images: List<Image> = emptyList()
 )

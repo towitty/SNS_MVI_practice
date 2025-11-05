@@ -14,7 +14,7 @@ class WritingActivity : AppCompatActivity() {
 
         setContent {
             SNSTheme {
-                WritingNavHost()
+                WritingNavHost { finish() }
             }
         }
     }
