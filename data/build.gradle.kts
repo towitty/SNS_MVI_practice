@@ -61,4 +61,6 @@ dependencies {
     implementation(libs.okhttp)
 
     implementation(libs.androidx.lifecycle.service)
+
+    implementation(libs.androidx.paging.runtime)
 }

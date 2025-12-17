@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.towitty.presentation.main.board.BoardScreen
 import com.towitty.presentation.main.setting.SettingScreen
 
 
@@ -37,7 +38,7 @@ fun MainNavHost() {
                     startDestination = MainRoute.BOARD.route
                 ) {
                     composable(route = MainRoute.BOARD.route) {
-//                        BoardScreen()
+                        BoardScreen()
                     }
                     composable(route = MainRoute.SETTING.route) {
                         SettingScreen()
