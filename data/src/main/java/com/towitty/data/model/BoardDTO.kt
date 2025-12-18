@@ -2,7 +2,7 @@ package com.towitty.data.model
 
 import com.towitty.domain.model.Board
 import kotlinx.serialization.Serializable
-import kotlin.collections.emptyList
+import kotlinx.serialization.json.Json
 
 @Serializable
 data class BoardDTO(
@@ -17,11 +17,12 @@ data class BoardDTO(
 )
 
 fun BoardDTO.toDomainModel(): Board {
+    val contentParam = Json.decodeFromString<ContentParam>(content)
     return Board(
         id = this.id,
         title = this.title,
-        content = this.content,
-        images = emptyList(),
+        content = contentParam.text,
+        images = contentParam.images,
         username = this.createUserName,
         profileImageUrl = this.createUserProfileFilePath
     )

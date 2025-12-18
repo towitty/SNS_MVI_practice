@@ -12,6 +12,7 @@ import com.towitty.data.model.BoardParam
 import com.towitty.data.model.BoardParcel
 import com.towitty.data.model.ContentParam
 import com.towitty.data.retrofit.BoardService
+import com.towitty.domain.model.ACTION_POSTED
 import com.towitty.domain.usecase.file.UploadImageUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -84,7 +85,8 @@ class PostingService : LifecycleService() {
 
     private suspend fun postBoard(boardParcel: BoardParcel) {
         //업로드
-        val uploadedImages = boardParcel.images.mapNotNull {image-> uploadImageUseCase(image).getOrNull() }
+        val uploadedImages =
+            boardParcel.images.mapNotNull { image -> uploadImageUseCase(image).getOrNull() }
 
         val contentParam = ContentParam(
             text = boardParcel.content,
@@ -93,6 +95,12 @@ class PostingService : LifecycleService() {
         val boardParam = BoardParam(boardParcel.title, contentParam.toJson())
         val requestBody = boardParam.toRequestBody()
         boardService.postBoard(requestBody)
+        sendBroadcast(
+            Intent(ACTION_POSTED)
+                .apply {
+                    setPackage(packageName)
+                }
+        )
         stopForeground(STOP_FOREGROUND_DETACH)
     }
 

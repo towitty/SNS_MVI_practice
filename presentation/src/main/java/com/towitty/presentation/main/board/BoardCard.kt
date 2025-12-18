@@ -2,6 +2,7 @@ package com.towitty.presentation.main.board
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -52,7 +53,7 @@ fun BoardCard(
             // 이미지 페이저
             if (images.isNotEmpty()) {
                 SNSImagePager(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
                     images = images
                 )
             }
