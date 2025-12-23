@@ -3,6 +3,7 @@ package com.towitty.presentation.main.board
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import androidx.paging.map
+import com.towitty.domain.model.Comment
 import com.towitty.domain.usecase.main.board.DeleteBoardUseCase
 import com.towitty.domain.usecase.main.board.GetBoardsUseCase
 import com.towitty.presentation.model.main.board.BoardCardModel
@@ -58,6 +59,10 @@ class BoardViewModel @Inject constructor(
                 deletedBoardIds = state.deletedBoardIds + model.boardId
             )
         }
+    }
+
+    fun onDeleteComment(comment: Comment) = intent {
+
     }
 
 }

@@ -13,7 +13,8 @@ data class BoardDTO(
     val updatedAt: String,
     val createUserId: Long,
     val createUserName: String,
-    val createUserProfileFilePath: String
+    val createUserProfileFilePath: String,
+    val commentList: List<CommentDTO>
 )
 
 fun BoardDTO.toDomainModel(): Board {
@@ -24,6 +25,7 @@ fun BoardDTO.toDomainModel(): Board {
         content = contentParam.text,
         images = contentParam.images,
         username = this.createUserName,
+        comments = this.commentList.map { it.toDomainModel() },
         profileImageUrl = this.createUserProfileFilePath
     )
 }

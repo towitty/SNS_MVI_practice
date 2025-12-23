@@ -20,7 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.towitty.domain.model.Comment
 import com.towitty.presentation.component.SNSImagePager
+import com.towitty.presentation.main.board.comment.CommentDialog
 import com.towitty.presentation.theme.SNSTheme
 
 @Composable
@@ -29,9 +31,11 @@ fun BoardCard(
     username: String,
     images: List<String>,
     text: String,
+    comments: List<Comment>,
     onOptionClick: () -> Unit,
-    onReplyClick: () -> Unit
+    onDeleteComment: (Comment) -> Unit
 ) {
+    var commentDialogVisible by remember { mutableStateOf(false) }
     Surface {
         Column(
             modifier = Modifier
@@ -53,7 +57,9 @@ fun BoardCard(
             // 이미지 페이저
             if (images.isNotEmpty()) {
                 SNSImagePager(
-                    modifier = Modifier.fillMaxWidth().aspectRatio(1f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .aspectRatio(1f),
                     images = images
                 )
             }
@@ -92,12 +98,20 @@ fun BoardCard(
                     .padding(top = 8.dp)
                     .padding(horizontal = 8.dp)
                     .align(Alignment.End),
-                onClick = onReplyClick
+                onClick = { commentDialogVisible = true }
             ) {
                 Text(text = "댓글")
             }
         }
     }
+
+    CommentDialog(
+        visible = commentDialogVisible,
+        comments = comments,
+        onDismissRequest = { commentDialogVisible = false },
+        onDeleteComment = onDeleteComment,
+        onCloseClick = { commentDialogVisible = false }
+    )
 }
 
 @Preview
@@ -109,8 +123,9 @@ private fun BoardCardPreview() {
             username = "Ricky Andrews",
             images = emptyList(),
             text = "ref1\n ref2\n ref3\n",
+            comments = emptyList(),
             onOptionClick = {},
-            onReplyClick = {}
+            onDeleteComment = {}
         )
     }
 }

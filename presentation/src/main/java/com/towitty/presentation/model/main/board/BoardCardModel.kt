@@ -2,13 +2,15 @@ package com.towitty.presentation.model.main.board
 
 import androidx.compose.runtime.Immutable
 import com.towitty.domain.model.Board
+import com.towitty.domain.model.Comment
 
 @Immutable
 data class BoardCardModel(
     val boardId: Long,
     val username: String,
     val images: List<String>,
-    val text: String
+    val text: String,
+    val comments: List<Comment>
 )
 
 fun Board.toUiModel(): BoardCardModel {
@@ -16,6 +18,7 @@ fun Board.toUiModel(): BoardCardModel {
         boardId = this.id,
         username = this.username,
         images = this.images,
-        text = this.content
+        text = this.content,
+        comments = this.comments
     )
 }
