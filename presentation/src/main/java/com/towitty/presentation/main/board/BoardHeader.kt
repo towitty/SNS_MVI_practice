@@ -22,6 +22,7 @@ import com.towitty.presentation.theme.SNSTheme
 @Composable
 fun BoardHeader(
     modifier: Modifier = Modifier,
+    isMine: Boolean,
     profileImageUrl: String? = null,
     username: String,
     onOptionClick: () -> Unit
@@ -33,6 +34,7 @@ fun BoardHeader(
         // 프로필 이미지
         SNSProfileImage(
             modifier = Modifier
+                .padding(vertical = 8.dp)
                 .padding(start = 8.dp)
                 .size(36.dp),
             profileImageUrl = profileImageUrl,
@@ -47,11 +49,13 @@ fun BoardHeader(
 
         Spacer(modifier = Modifier.weight(1f))
         // 옵션 버튼
-        IconButton(onClick = onOptionClick) {
-            Icon(
-                imageVector = Icons.Filled.MoreVert,
-                contentDescription = "옵션"
-            )
+        if (isMine) {
+            IconButton(onClick = onOptionClick) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "옵션"
+                )
+            }
         }
     }
 }
@@ -62,6 +66,7 @@ private fun BoardHeaderPreview() {
     SNSTheme {
         Surface {
             BoardHeader(
+                isMine = true,
                 profileImageUrl = null,
                 username = "Young June",
                 onOptionClick = {}

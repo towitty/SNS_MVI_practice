@@ -20,12 +20,13 @@ data class BoardDTO(
 fun BoardDTO.toDomainModel(): Board {
     val contentParam = Json.decodeFromString<ContentParam>(content)
     return Board(
+        userId = this.createUserId,
         id = this.id,
         title = this.title,
         content = contentParam.text,
         images = contentParam.images,
         username = this.createUserName,
-        comments = this.commentList.map { it.toDomainModel() },
-        profileImageUrl = this.createUserProfileFilePath
+        profileImageUrl = this.createUserProfileFilePath,
+        comments = this.commentList.map { it.toDomainModel() }
     )
 }
